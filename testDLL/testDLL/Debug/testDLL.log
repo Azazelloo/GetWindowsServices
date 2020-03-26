@@ -1,0 +1,5 @@
+﻿  main.cpp
+c:\users\зверюга!\desktop\testdll\testdll\main.cpp(5): warning C4273: 'func': inconsistent dll linkage
+  c:\users\зверюга!\desktop\testdll\testdll\header.h(11): note: see previous definition of 'func'
+     Creating library C:\Users\╟тхЁ■ур!\Desktop\testDLL\Debug\testDLL.lib and object C:\Users\╟тхЁ■ур!\Desktop\testDLL\Debug\testDLL.exp
+  testDLL.vcxproj -> C:\Users\Зверюга!\Desktop\testDLL\Debug\testDLL.dll

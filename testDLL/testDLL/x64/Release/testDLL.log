@@ -1,0 +1,22 @@
+﻿  pch.cpp
+  dllmain.cpp
+  main.cpp
+c:\users\azazello\desktop\testdll\testdll\main.cpp(6): warning C4273: 'GetCountServices': inconsistent dll linkage
+  c:\users\azazello\desktop\testdll\testdll\header.h(27): note: see previous definition of 'GetCountServices'
+c:\users\azazello\desktop\testdll\testdll\main.cpp(9): warning C4101: 'serviceCount': unreferenced local variable
+c:\users\azazello\desktop\testdll\testdll\main.cpp(35): warning C4273: 'GetServicesList': inconsistent dll linkage
+  c:\users\azazello\desktop\testdll\testdll\header.h(26): note: see previous definition of 'GetServicesList'
+c:\users\azazello\desktop\testdll\testdll\main.cpp(45): warning C4101: 'servicesConfig': unreferenced local variable
+c:\users\azazello\desktop\testdll\testdll\main.cpp(38): warning C4101: 'schSCService': unreferenced local variable
+c:\users\azazello\desktop\testdll\testdll\main.cpp(107): warning C4273: 'StopSrv': inconsistent dll linkage
+  c:\users\azazello\desktop\testdll\testdll\header.h(28): note: see previous definition of 'StopSrv'
+c:\users\azazello\desktop\testdll\testdll\main.cpp(123): warning C4273: 'StartSrv': inconsistent dll linkage
+  c:\users\azazello\desktop\testdll\testdll\header.h(29): note: see previous definition of 'StartSrv'
+c:\users\azazello\desktop\testdll\testdll\main.cpp(124): warning C4101: 'lastStatus': unreferenced local variable
+c:\users\azazello\desktop\testdll\testdll\main.cpp(139): warning C4273: 'RestartSrv': inconsistent dll linkage
+  c:\users\azazello\desktop\testdll\testdll\header.h(30): note: see previous definition of 'RestartSrv'
+     Creating library C:\Users\Azazello\Desktop\testDLL\x64\Release\testDLL.lib and object C:\Users\Azazello\Desktop\testDLL\x64\Release\testDLL.exp
+  Generating code
+  All 6 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  testDLL.vcxproj -> C:\Users\Azazello\Desktop\testDLL\x64\Release\testDLL.dll
