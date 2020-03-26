@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifdef MYDLL_EXPORTS
 #define MYDLL_API __declspec(dllexport)
 #else

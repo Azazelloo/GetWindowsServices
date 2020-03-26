@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+п»ї#define _CRT_SECURE_NO_WARNINGS
 
 #include "Header.h"
 #include <iostream>
@@ -11,7 +11,7 @@ int main()
 	DWORD size = 0;
 	int err;
 	GetCountServices(size);
-	ServicesObj* ss=new ServicesObj[size]; //добавить функцию считающую количество служб
+	ServicesObj* ss=new ServicesObj[size]; //РґРѕР±Р°РІРёС‚СЊ С„СѓРЅРєС†РёСЋ СЃС‡РёС‚Р°СЋС‰СѓСЋ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃР»СѓР¶Р±
 	GetServicesList(ss);
 
 	for (size_t i=0;i<size;i++)
@@ -20,8 +20,8 @@ int main()
 		wcout<<ss[i].Name << endl;
 	}
 
-	//err=StopSrv(ss[0].Name); //остановка службы
-	//err=StartSrv(ss[0].Name);// запуск службы
+	//err=StopSrv(ss[0].Name); //РѕСЃС‚Р°РЅРѕРІРєР° СЃР»СѓР¶Р±С‹
+	//err=StartSrv(ss[0].Name);// Р·Р°РїСѓСЃРє СЃР»СѓР¶Р±С‹
 	err=RestartSrv(ss[0].Name);
 	return 0;
 }

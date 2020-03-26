@@ -1,10 +1,10 @@
-#include "pch.h"
+п»ї#include "pch.h"
 #include "Header.h"
 
 
 void GetCountServices(DWORD& size)
 {
-	schSCManager=OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);  //открываем дескриптор БД;
+	schSCManager=OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);  //РѕС‚РєСЂС‹РІР°РµРј РґРµСЃРєСЂРёРїС‚РѕСЂ Р‘Р”;
 	void* buf_for_status = new LPSTR[4096]();
 	DWORD moreBytesNeeded=0, serviceCount,bufSize=0;
 
@@ -36,7 +36,7 @@ int GetServicesList(ServicesObj* servList)
 	setlocale(LC_ALL, "Russian");
 
 	SC_HANDLE schSCService;
-	schSCManager = OpenSCManager(NULL,NULL,SC_MANAGER_ALL_ACCESS);  //открываем дескриптор БД
+	schSCManager = OpenSCManager(NULL,NULL,SC_MANAGER_ALL_ACCESS);  //РѕС‚РєСЂС‹РІР°РµРј РґРµСЃРєСЂРёРїС‚РѕСЂ Р‘Р”
 
 	void* buf_for_status = NULL, *buf_for_config=NULL;
 	DWORD bufSize = 0;
@@ -44,7 +44,7 @@ int GetServicesList(ServicesObj* servList)
 	ENUM_SERVICE_STATUS_PROCESS* servicesStatus;
 	QUERY_SERVICE_CONFIG* servicesConfig;
 
-	/*получаем массив структур служб*/
+	/*РїРѕР»СѓС‡Р°РµРј РјР°СЃСЃРёРІ СЃС‚СЂСѓРєС‚СѓСЂ СЃР»СѓР¶Р±*/
 	for (;;) 
 	{
 		if (EnumServicesStatusEx(schSCManager,SC_ENUM_PROCESS_INFO,SERVICE_WIN32,SERVICE_STATE_ALL,
@@ -67,7 +67,7 @@ int GetServicesList(ServicesObj* servList)
 		moreBytesNeeded = 0;
 	}
 
-	/*заполняем массив объектами типа ServicesObj*/
+	/*Р·Р°РїРѕР»РЅСЏРµРј РјР°СЃСЃРёРІ РѕР±СЉРµРєС‚Р°РјРё С‚РёРїР° ServicesObj*/
 
 	for(size_t i = 0; i < serviceCount; i++)
 	{
@@ -76,7 +76,7 @@ int GetServicesList(ServicesObj* servList)
 		servList[i].DispName = servicesStatus[i].lpDisplayName;
 		servList[i].state = servicesStatus[i].ServiceStatusProcess.dwCurrentState;
 
-		/*вытаскиваем group и path*/
+		/*РІС‹С‚Р°СЃРєРёРІР°РµРј group Рё path*/
 		//schSCService = OpenService(schSCManager, servicesStatus[i].lpServiceName, SERVICE_ALL_ACCESS);
 		//QueryServiceConfig(schSCService, (LPQUERY_SERVICE_CONFIGA)buf_for_config, 4096, &moreBytesNeeded);
 		//servicesConfig = (QUERY_SERVICE_CONFIG*)buf_for_config;
@@ -88,7 +88,7 @@ int GetServicesList(ServicesObj* servList)
 		//	//if (indexFlag >= 0)
 		//	//{
 		//	//	servList[i].path.insert(servList[i].path.begin(),tmp_str.begin(),tmp_str.begin()+indexFlag);
-		//	//	servList[i].group.insert(servList[i].group.begin(), tmp_str.begin() + indexFlag+3, tmp_str.end()); //+3 -> убираем -k
+		//	//	servList[i].group.insert(servList[i].group.begin(), tmp_str.begin() + indexFlag+3, tmp_str.end()); //+3 -> СѓР±РёСЂР°РµРј -k
 		//	//}
 		//	//else servList[i].path.insert(servList[i].path.begin(), tmp_str.begin(), tmp_str.end());
 		//}
@@ -97,7 +97,7 @@ int GetServicesList(ServicesObj* servList)
 		//CloseServiceHandle(schSCService);
 	}
 
-	//CloseServiceHandle(schSCManager); //не закрываем дескриптор для дальнейшего использования в функциях
+	//CloseServiceHandle(schSCManager); //РЅРµ Р·Р°РєСЂС‹РІР°РµРј РґРµСЃРєСЂРёРїС‚РѕСЂ РґР»СЏ РґР°Р»СЊРЅРµР№С€РµРіРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РІ С„СѓРЅРєС†РёСЏС…
 	//start,stop,restart
 	return 0;
 }
@@ -144,7 +144,7 @@ int RestartSrv(WCHAR* name)
 
 	ControlService(schSCService, SERVICE_CONTROL_STOP, &lastStatus);
 
-	while (lastStatus.dwCurrentState != 1) //ждем остановки, службы обновляя структуру lastStatus
+	while (lastStatus.dwCurrentState != 1) //Р¶РґРµРј РѕСЃС‚Р°РЅРѕРІРєРё, СЃР»СѓР¶Р±С‹ РѕР±РЅРѕРІР»СЏСЏ СЃС‚СЂСѓРєС‚СѓСЂСѓ lastStatus
 	{ 
 		err=ControlService(schSCService, SERVICE_CONTROL_STOP, &lastStatus); 
 	} 
