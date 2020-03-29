@@ -2,9 +2,12 @@
 #include "Header.h"
 
 
-void GetCountServices(DWORD& size)
+int GetCountServices(DWORD& size)
 {
 	schSCManager=OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);  //открываем дескриптор БД;
+
+	if(schSCManager==0) return 0;
+
 	void* buf_for_status = new LPSTR[4096]();
 	DWORD moreBytesNeeded=0, serviceCount,bufSize=0;
 
@@ -19,8 +22,9 @@ void GetCountServices(DWORD& size)
 		int err = GetLastError();
 		if (ERROR_MORE_DATA != err)
 		{
-			free(buf_for_status);
-			break;
+			CloseServiceHandle(schSCManager);
+			delete[] buf_for_status;
+			return 0;
 		}
 		bufSize += moreBytesNeeded;
 		buf_for_status = new LPSTR[bufSize]();
@@ -29,6 +33,8 @@ void GetCountServices(DWORD& size)
 
 	CloseServiceHandle(schSCManager);
 	delete[] buf_for_status;
+
+	return 1;
 }
 
 int GetServicesList(ServicesObj* servList)
@@ -43,6 +49,8 @@ int GetServicesList(ServicesObj* servList)
 	DWORD moreBytesNeeded, serviceCount;
 	ENUM_SERVICE_STATUS_PROCESS* servicesStatus;
 	QUERY_SERVICE_CONFIG* servicesConfig;
+	const WCHAR* tmpStr;
+	WCHAR *str1,*str2;
 
 	/*получаем массив структур служб*/
 	for (;;) 
@@ -62,8 +70,7 @@ int GetServicesList(ServicesObj* servList)
 				return err;
 			}
 		bufSize += moreBytesNeeded;
-		free(buf_for_status);
-		buf_for_status = malloc(bufSize);
+		buf_for_status = new LPSTR[bufSize]();
 		moreBytesNeeded = 0;
 	}
 
@@ -71,32 +78,44 @@ int GetServicesList(ServicesObj* servList)
 
 	for(size_t i = 0; i < serviceCount; i++)
 	{
-		servList[i].Name = servicesStatus[i].lpServiceName;
-		servList[i].PID = servicesStatus[i].ServiceStatusProcess.dwProcessId;
-		servList[i].DispName = servicesStatus[i].lpDisplayName;
-		servList[i].state = servicesStatus[i].ServiceStatusProcess.dwCurrentState;
+		servList[i].m_name = servicesStatus[i].lpServiceName;
+		servList[i].m_pid = servicesStatus[i].ServiceStatusProcess.dwProcessId;
+		servList[i].m_dispName = servicesStatus[i].lpDisplayName;
+		servList[i].m_state = servicesStatus[i].ServiceStatusProcess.dwCurrentState;
 
 		/*вытаскиваем group и path*/
-		//schSCService = OpenService(schSCManager, servicesStatus[i].lpServiceName, SERVICE_ALL_ACCESS);
-		//QueryServiceConfig(schSCService, (LPQUERY_SERVICE_CONFIGA)buf_for_config, 4096, &moreBytesNeeded);
-		//servicesConfig = (QUERY_SERVICE_CONFIG*)buf_for_config;
+		buf_for_config=new QUERY_SERVICE_CONFIG[4096]();
 
-		//if (servicesConfig->lpBinaryPathName != nullptr)
-		//{
-		//	tmp_str = servicesConfig->lpBinaryPathName;
-		//	//int indexFlag=tmp_str.find("-k");
-		//	//if (indexFlag >= 0)
-		//	//{
-		//	//	servList[i].path.insert(servList[i].path.begin(),tmp_str.begin(),tmp_str.begin()+indexFlag);
-		//	//	servList[i].group.insert(servList[i].group.begin(), tmp_str.begin() + indexFlag+3, tmp_str.end()); //+3 -> убираем -k
-		//	//}
-		//	//else servList[i].path.insert(servList[i].path.begin(), tmp_str.begin(), tmp_str.end());
-		//}
-		//else tmp_str = " - ";
+		schSCService = OpenService(schSCManager, servicesStatus[i].lpServiceName, SERVICE_ALL_ACCESS);
+		QueryServiceConfig(schSCService, (LPQUERY_SERVICE_CONFIGW)buf_for_config, 4096, &moreBytesNeeded);
+		servicesConfig = (LPQUERY_SERVICE_CONFIGW)buf_for_config;
 
-		//CloseServiceHandle(schSCService);
+		if (servicesConfig->lpBinaryPathName != nullptr)
+		{
+			tmpStr = servicesConfig->lpBinaryPathName;
+			size_t j;
+			for(j=0;j<wcslen(tmpStr);j++)// ищем -k
+			{
+				if(tmpStr[j] == '-')
+				{
+					if(tmpStr[j + 1] == 'k')
+					{
+						MyWcsncpy(servList[i].m_path,tmpStr,j-2); // не захватываем пробел и '-' 
+						MyWcsncpy(servList[i].m_group,tmpStr+j+2,wcslen(tmpStr)-j);
+						break;
+					}
+				}
+
+				if(tmpStr[j+1]=='\0')//если в строке нет -k
+				{
+					MyWcsncpy(servList[i].m_path,tmpStr,j+1); //не теряем '\0'
+					break;
+				}
+			}
+		}
+		CloseServiceHandle(schSCService);
 	}
-
+	
 	//CloseServiceHandle(schSCManager); //не закрываем дескриптор для дальнейшего использования в функциях
 	//start,stop,restart
 	return 0;
@@ -149,8 +168,20 @@ int RestartSrv(WCHAR* name)
 		err=ControlService(schSCService, SERVICE_CONTROL_STOP, &lastStatus); 
 	} 
 
-	StartService(schSCService, 0, NULL);
+	if(StartService(schSCService, 0, NULL))
+	{
+		CloseServiceHandle(schSCService);
+		return 1;
+	}
 
-	CloseServiceHandle(schSCService);
-	return 1;
+}
+
+
+void MyWcsncpy(WCHAR* s_to, const WCHAR* s_from, size_t count)
+{
+	for(size_t i=0;i<=count;i++)
+	{
+		s_to[i]=s_from[i];
+	}
+	s_to[count+1]=L'\0';
 }

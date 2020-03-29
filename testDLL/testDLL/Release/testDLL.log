@@ -1,22 +1,18 @@
-﻿  main.cpp
-c:\users\azazello\desktop\testdll\testdll\main.cpp(6): warning C4273: 'GetCountServices': inconsistent dll linkage
-  c:\users\azazello\desktop\testdll\testdll\header.h(27): note: see previous definition of 'GetCountServices'
-c:\users\azazello\desktop\testdll\testdll\main.cpp(9): warning C4101: 'serviceCount': unreferenced local variable
-c:\users\azazello\desktop\testdll\testdll\main.cpp(36): warning C4273: 'GetServicesList': inconsistent dll linkage
-  c:\users\azazello\desktop\testdll\testdll\header.h(26): note: see previous definition of 'GetServicesList'
-c:\users\azazello\desktop\testdll\testdll\main.cpp(46): warning C4101: 'servicesConfig': unreferenced local variable
-c:\users\azazello\desktop\testdll\testdll\main.cpp(39): warning C4101: 'schSCService': unreferenced local variable
-c:\users\azazello\desktop\testdll\testdll\main.cpp(108): warning C4273: 'StopSrv': inconsistent dll linkage
-  c:\users\azazello\desktop\testdll\testdll\header.h(28): note: see previous definition of 'StopSrv'
-c:\users\azazello\desktop\testdll\testdll\main.cpp(124): warning C4273: 'StartSrv': inconsistent dll linkage
-  c:\users\azazello\desktop\testdll\testdll\header.h(29): note: see previous definition of 'StartSrv'
-c:\users\azazello\desktop\testdll\testdll\main.cpp(125): warning C4101: 'lastStatus': unreferenced local variable
-c:\users\azazello\desktop\testdll\testdll\main.cpp(140): warning C4273: 'RestartSrv': inconsistent dll linkage
-  c:\users\azazello\desktop\testdll\testdll\header.h(30): note: see previous definition of 'RestartSrv'
-     Creating library C:\Users\Azazello\Desktop\testDLL\Release\testDLL.lib and object C:\Users\Azazello\Desktop\testDLL\Release\testDLL.exp
-  Generating code
-  1 of 6 functions (16.7%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  testDLL.vcxproj -> C:\Users\Azazello\Desktop\testDLL\Release\testDLL.dll
+﻿  pch.cpp
+  dllmain.cpp
+  main.cpp
+c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(6): warning C4273: 'GetCountServices': inconsistent dll linkage
+  c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\header.h(29): note: see previous definition of 'GetCountServices'
+c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(12): warning C4101: 'serviceCount': unreferenced local variable
+c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(41): warning C4273: 'GetServicesList': inconsistent dll linkage
+  c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\header.h(28): note: see previous definition of 'GetServicesList'
+c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(105): error C4996: 'wcsncpy': This function or variable may be unsafe. Consider using wcsncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_wstring.h(205): note: see declaration of 'wcsncpy'
+c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(53): warning C4101: 'str2': unreferenced local variable
+c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(121): warning C4273: 'StopSrv': inconsistent dll linkage
+  c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\header.h(30): note: see previous definition of 'StopSrv'
+c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(137): warning C4273: 'StartSrv': inconsistent dll linkage
+  c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\header.h(31): note: see previous definition of 'StartSrv'
+c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(138): warning C4101: 'lastStatus': unreferenced local variable
+c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(153): warning C4273: 'RestartSrv': inconsistent dll linkage
+  c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\header.h(32): note: see previous definition of 'RestartSrv'
