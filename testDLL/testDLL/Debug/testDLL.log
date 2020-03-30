@@ -1,23 +1,12 @@
-﻿  pch.cpp
-  dllmain.cpp
-  main.cpp
-c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(6): warning C4273: 'GetCountServices': inconsistent dll linkage
-  c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\header.h(34): note: see previous definition of 'GetCountServices'
-c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(12): warning C4101: 'serviceCount': unreferenced local variable
-c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(41): warning C4273: 'GetServicesList': inconsistent dll linkage
-  c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\header.h(33): note: see previous definition of 'GetServicesList'
-c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(53): warning C4101: 'str1': unreferenced local variable
-c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(53): warning C4101: 'str2': unreferenced local variable
-c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(126): warning C4273: 'StopSrv': inconsistent dll linkage
-  c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\header.h(35): note: see previous definition of 'StopSrv'
-c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(142): warning C4273: 'StartSrv': inconsistent dll linkage
-  c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\header.h(36): note: see previous definition of 'StartSrv'
-c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(143): warning C4101: 'lastStatus': unreferenced local variable
-c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(158): warning C4273: 'RestartSrv': inconsistent dll linkage
-  c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\header.h(37): note: see previous definition of 'RestartSrv'
-c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(181): warning C4273: 'MyWcsncpy': inconsistent dll linkage
-  c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\header.h(38): note: see previous definition of 'MyWcsncpy'
-  Generating Code...
-c:\users\зверюга!\desktop\getwindowsservices-master\testdll\testdll\main.cpp(177): warning C4715: 'RestartSrv': not all control paths return a value
-     Creating library C:\Users\Зверюга!\Desktop\GetWindowsServices-master\testDLL\Debug\testDLL.lib and object C:\Users\Зверюга!\Desktop\GetWindowsServices-master\testDLL\Debug\testDLL.exp
-  testDLL.vcxproj -> C:\Users\Зверюга!\Desktop\GetWindowsServices-master\testDLL\Debug\testDLL.dll
+﻿  main.cpp
+c:\users\зверюга!\desktop\getwindowsservices\testdll\testdll\main.cpp(5): warning C4273: 'GetServicesList': inconsistent dll linkage
+  c:\users\зверюга!\desktop\getwindowsservices\testdll\testdll\header.h(29): note: see previous definition of 'GetServicesList'
+c:\users\зверюга!\desktop\getwindowsservices\testdll\testdll\main.cpp(80): warning C4273: 'StopSrv': inconsistent dll linkage
+  c:\users\зверюга!\desktop\getwindowsservices\testdll\testdll\header.h(30): note: see previous definition of 'StopSrv'
+c:\users\зверюга!\desktop\getwindowsservices\testdll\testdll\main.cpp(96): warning C4273: 'StartSrv': inconsistent dll linkage
+  c:\users\зверюга!\desktop\getwindowsservices\testdll\testdll\header.h(31): note: see previous definition of 'StartSrv'
+c:\users\зверюга!\desktop\getwindowsservices\testdll\testdll\main.cpp(97): warning C4101: 'lastStatus': unreferenced local variable
+c:\users\зверюга!\desktop\getwindowsservices\testdll\testdll\main.cpp(112): warning C4273: 'RestartSrv': inconsistent dll linkage
+  c:\users\зверюга!\desktop\getwindowsservices\testdll\testdll\header.h(32): note: see previous definition of 'RestartSrv'
+c:\users\зверюга!\desktop\getwindowsservices\testdll\testdll\main.cpp(131): warning C4715: 'RestartSrv': not all control paths return a value
+  testDLL.vcxproj -> C:\Users\Зверюга!\Desktop\GetWindowsServices\testDLL\Debug\testDLL.dll

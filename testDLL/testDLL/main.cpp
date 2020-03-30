@@ -1,43 +1,7 @@
 ﻿#include "pch.h"
 #include "Header.h"
 
-
-int GetCountServices(DWORD& size)
-{
-	schSCManager=OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);  //открываем дескриптор БД;
-
-	if(schSCManager==0) return 0;
-
-	void* buf_for_status = new LPSTR[4096]();
-	DWORD moreBytesNeeded=0, serviceCount,bufSize=0;
-
-	for (;;)
-	{
-		if (EnumServicesStatusEx(schSCManager, SC_ENUM_PROCESS_INFO, SERVICE_WIN32, SERVICE_STATE_ALL,
-			(LPBYTE)buf_for_status, bufSize, &moreBytesNeeded, &size, NULL, NULL))
-		{
-			break;
-		}
-
-		int err = GetLastError();
-		if (ERROR_MORE_DATA != err)
-		{
-			CloseServiceHandle(schSCManager);
-			delete[] buf_for_status;
-			return 0;
-		}
-		bufSize += moreBytesNeeded;
-		buf_for_status = new LPSTR[bufSize]();
-		moreBytesNeeded = 0;
-	}
-
-	CloseServiceHandle(schSCManager);
-	delete[] buf_for_status;
-
-	return 1;
-}
-
-int GetServicesList(ServicesObj* servList)
+vector<ServicesObj> GetServicesList()
 {
 	setlocale(LC_ALL, "Russian");
 
@@ -49,8 +13,6 @@ int GetServicesList(ServicesObj* servList)
 	DWORD moreBytesNeeded, serviceCount;
 	ENUM_SERVICE_STATUS_PROCESS* servicesStatus;
 	QUERY_SERVICE_CONFIG* servicesConfig;
-	const WCHAR* tmpStr;
-	WCHAR *str1,*str2;
 
 	/*получаем массив структур служб*/
 	for (;;) 
@@ -59,7 +21,6 @@ int GetServicesList(ServicesObj* servList)
 			(LPBYTE)buf_for_status,bufSize,&moreBytesNeeded,&serviceCount,NULL,NULL)) 
 			{
 				servicesStatus = (ENUM_SERVICE_STATUS_PROCESS*)buf_for_status;
-				bufSize = 0;
 				break;
 			}
 
@@ -67,14 +28,16 @@ int GetServicesList(ServicesObj* servList)
 		if (ERROR_MORE_DATA != err) 
 			{
 				free(buf_for_status);
-				return err;
+				return vector<ServicesObj>();
 			}
 		bufSize += moreBytesNeeded;
-		buf_for_status = new LPSTR[bufSize]();
+		buf_for_status =new LPSTR[bufSize]();
 		moreBytesNeeded = 0;
 	}
 
 	/*заполняем массив объектами типа ServicesObj*/
+	vector<ServicesObj> servList(serviceCount);
+	wstring tmpStr;
 
 	for(size_t i = 0; i < serviceCount; i++)
 	{
@@ -93,32 +56,23 @@ int GetServicesList(ServicesObj* servList)
 		if (servicesConfig->lpBinaryPathName != nullptr)
 		{
 			tmpStr = servicesConfig->lpBinaryPathName;
-			size_t j;
-			for(j=0;j<wcslen(tmpStr);j++)// ищем -k
-			{
-				if(tmpStr[j] == '-')
-				{
-					if(tmpStr[j + 1] == 'k')
-					{
-						MyWcsncpy(servList[i].m_path,tmpStr,j-2); // не захватываем пробел и '-' 
-						MyWcsncpy(servList[i].m_group,tmpStr+j+2,wcslen(tmpStr)-j);
-						break;
-					}
-				}
 
-				if(tmpStr[j+1]=='\0')//если в строке нет -k
-				{
-					MyWcsncpy(servList[i].m_path,tmpStr,j+1); //не теряем '\0'
-					break;
-				}
+			int flag=tmpStr.find(L"-k");
+			if(flag>0)
+			{
+				servList[i].m_path.insert(servList[i].m_path.begin(),tmpStr.begin(),tmpStr.begin()+flag);
+				servList[i].m_group.insert(servList[i].m_group.begin(),tmpStr.begin()+flag+2,tmpStr.end());
 			}
+			else servList[i].m_path.insert(servList[i].m_path.begin(),tmpStr.begin(),tmpStr.end());
+
+			
 		}
 		CloseServiceHandle(schSCService);
 	}
 	
 	//CloseServiceHandle(schSCManager); //не закрываем дескриптор для дальнейшего использования в функциях
 	//start,stop,restart
-	return 0;
+	return servList;
 }
 
 
@@ -176,12 +130,3 @@ int RestartSrv(WCHAR* name)
 
 }
 
-
-void MyWcsncpy(WCHAR* s_to, const WCHAR* s_from, size_t count)
-{
-	for(size_t i=0;i<=count;i++)
-	{
-		s_to[i]=s_from[i];
-	}
-	s_to[count+1]=L'\0';
-}
