@@ -8,5 +8,4 @@ c:\users\зверюга!\desktop\getwindowsservices\testdll\testdll\main.cpp(96)
 c:\users\зверюга!\desktop\getwindowsservices\testdll\testdll\main.cpp(97): warning C4101: 'lastStatus': unreferenced local variable
 c:\users\зверюга!\desktop\getwindowsservices\testdll\testdll\main.cpp(112): warning C4273: 'RestartSrv': inconsistent dll linkage
   c:\users\зверюга!\desktop\getwindowsservices\testdll\testdll\header.h(32): note: see previous definition of 'RestartSrv'
-c:\users\зверюга!\desktop\getwindowsservices\testdll\testdll\main.cpp(131): warning C4715: 'RestartSrv': not all control paths return a value
   testDLL.vcxproj -> C:\Users\Зверюга!\Desktop\GetWindowsServices\testDLL\Debug\testDLL.dll

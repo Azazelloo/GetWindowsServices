@@ -117,9 +117,12 @@ int RestartSrv(WCHAR* name)
 
 	ControlService(schSCService, SERVICE_CONTROL_STOP, &lastStatus);
 
-	while (lastStatus.dwCurrentState != 1) //ждем остановки, службы обновляя структуру lastStatus
+	while (lastStatus.dwCurrentState != 1 ) //ждем остановки, службы обновляя структуру lastStatus
 	{ 
 		err=ControlService(schSCService, SERVICE_CONTROL_STOP, &lastStatus); 
+
+		if(err==0 && GetLastError()==ERROR_DEPENDENT_SERVICES_RUNNING)
+			return 0;
 	} 
 
 	if(StartService(schSCService, 0, NULL))
@@ -128,5 +131,7 @@ int RestartSrv(WCHAR* name)
 		return 1;
 	}
 
+	CloseServiceHandle(schSCService);
+	return 0;
 }
 
