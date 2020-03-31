@@ -18,7 +18,7 @@ static SC_HANDLE schSCManager;
 
 struct ServicesObj
 {
-	wstring m_name;
+	WCHAR* m_name;
 	unsigned int m_pid=0;
 	wstring m_dispName;
 	unsigned int m_state=0;
